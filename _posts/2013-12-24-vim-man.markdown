@@ -1,0 +1,13 @@
+---
+layout: post
+title: 在vim中查看man帮助
+categories: vim
+---
+
+## 在vim中查看man帮助
+
+在vim7.3版中自带man帮助的vim脚本，只需要在~/.vimrc中添加下面的配置:
+
+    source $VIMRUNTIME/ftplugin/man.vim
+
+现在就可以使用`:Man`，`<Leader>K`，`CTRL-]`查看man帮助手册了，使用CTRL-T可以回退。
