@@ -1,0 +1,14 @@
+
+```expect
+#!/usr/bin/expect
+set timeout 60
+spawn /usr/bin/ssh -p 80 -D 7070 -g username@8.8.8.8
+expect {
+"password:" {
+send "password\r"
+}
+}
+interact {
+timeout 60 { send " "}
+}
+```
