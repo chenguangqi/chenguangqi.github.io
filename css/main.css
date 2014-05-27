@@ -10,10 +10,10 @@
   padding: 0;
 }
 
-html, body { height: 100%; }
+html, body { height: 75%; }
 
 body {
-  background-color: #AAA;
+  background-color: #002B36;
   font: 13.34px Helvetica, Arial, sans-serif;
   font-size: small;
   text-align: center;
