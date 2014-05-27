@@ -11,7 +11,7 @@ date:   2014-5-27 21:33:05
 ## 用message简单打印
 `message`是最基本的打印函数，这是一个例子：
 
-``` lisp
+{% highlight lisp linenos %}
 ; printing
 (message "hi")
 
@@ -19,7 +19,7 @@ date:   2014-5-27 21:33:05
 (message "Her age is: %d " 16)              ;%d is for number
 (message "Her name is: %s " "Vicky")        ;%s is for string
 (message "Her mid init is: %c " 86)         ;%c is for character in ASCII code
-```
+{% endhighlight %}
 
 在`*Mssages*`缓冲区中可以看到message的输出。你可以使用`view-echo-area-messages`查看这个
 缓冲区。
