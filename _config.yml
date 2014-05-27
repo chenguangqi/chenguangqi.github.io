@@ -1,3 +1,4 @@
 name: ChenGuangqi (陈广歧)
 markdown: kramdown
 pygments: true
+extensions: [fenced_code_blocks]
