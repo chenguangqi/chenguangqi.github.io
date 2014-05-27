@@ -11,7 +11,7 @@ date:   2014-5-27 21:33:05
 ## 用message简单打印
 `message`是最基本的打印函数，这是一个例子：
 
-```{.commonlisp}
+``` lisp
 ; printing
 (message "hi")
 
@@ -29,7 +29,7 @@ date:   2014-5-27 21:33:05
 例如，当缓冲区达到一定大小它会自动截断顶部的项目。还有，当一条消息重复多次时，它自动
 压缩重复的行。如果一个消息是太长的一行，它自动的截断。这是一个例子。
 
-```{.commonlisp}
+``` lisp
 (setq xx 1)
 (while (< xx 20)
   (message "yay")
@@ -46,7 +46,7 @@ date:   2014-5-27 21:33:05
 
 这是一个打印到自己缓冲区的例子
 
-```{.commonlisp}
+``` lisp
 (require 'find-lisp)
 (with-output-to-temp-buffer "*my output*")
   (mapc 'my-process-file (find-lisp-find-files "~/" "\\.html$"))
@@ -59,7 +59,7 @@ date:   2014-5-27 21:33:05
 ## print和prin1函数
 Elisp提供`print`函数，这是基本用法
 
-```{.commondlisp}
+``` lisp
 (print OBJECT)
 ```
 
@@ -73,7 +73,7 @@ buffer、frame等。
 参数，输出一个字符串。调用`describe-function`来查看它的在线文档。这是文档的部分摘录：
 
 
-```
+``` lisp
 (format STRING &rest OBJECTS)
 
 Format a string out of a format-string and arguments.
@@ -97,7 +97,7 @@ the next available argument:
 
 例如，如果你想打印yyy-mm-dd这样日期格式，并且带有前导**0**，你可以这样做
 
-```{.commonlisp}
+``` lisp
 ;; format yyyy-mm-dd, ISO 8601 format
 (print (format "%40d-%2d-%02d" 2012 4 10))
 ```
@@ -105,7 +105,7 @@ the next available argument:
 ## princ人类友好输出
 `princ`和`prin1`很相似，不同之处在于它是人类友好的。例如，它不打印字符串的分割符。
 
-```{.commonlisp}
+``` lisp
 (princ '("x" "y")) ; result display is (x y)
 (prin1 '("x" "y")) ; result display is ("x" "y")
 ```
