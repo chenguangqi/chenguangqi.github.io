@@ -1,4 +1,17 @@
 name: ChenGuangqi (陈广歧)
-markdown: kramdown
-pygments: true
-extensions: [fenced_code_blocks]
+encoding: utf-8
+
+permalink: pretty
+
+# Setup
+title: Chen Guangqi
+
+author:
+  name: 'Chen Guangqi'
+
+paginate: 5
+
+markdown: redcarpet
+highlighter: pygments
+redcarpet:
+  extensions: ['fenced_code_blocks']
