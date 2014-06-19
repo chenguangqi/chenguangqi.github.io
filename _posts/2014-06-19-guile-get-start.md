@@ -3,8 +3,6 @@ layout: post
 title: Guile 入门
 ---
 
-# Guile 入门
-
 ## 基本类型
 
 * 字符(character)
