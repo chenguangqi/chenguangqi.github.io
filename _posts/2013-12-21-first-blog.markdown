@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 title:  "首发，第一弹！"
 date:   2013-12-21 23:33:15
 ---
