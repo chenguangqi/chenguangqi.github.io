@@ -38,3 +38,49 @@ int main (int argc, char *argv[])
   return 0;
 }
 ```
+
+### 添加版本号和配置的头文件
+
+我们添加的第一个功能是为我们的可执行文件和项目提供一个版本号。
+虽然我们在源码中就可以做到，但是CMake提供了更灵活的方法。
+添加版本号可以如下修改CMakeLists文件：
+
+```cmake
+cmake_minimum_required (VERSION 2.6)
+project (Tutorial)
+# The version number. 
+set (Tutorial_VERSION_MAJOR 1)
+set (Tutorial_VERSION_MINOR 0)
+ 
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${PROJECT_SOURCE_DIR}/TutorialConfig.h.in"
+  "${PROJECT_BINARY_DIR}/TutorialConfig.h"
+  )
+ 
+# add the binary tree to the search path for include files
+# so that we will find TutorialConfig.h
+include_directories("${PROJECT_BINARY_DIR}")
+ 
+# add the executable
+add_executable(Tutorial tutorial.cxx)
+```
+
+**注意**： 以#开始的行是注释
+
+因为配置文件将被保存到编译目录中，我们必须把它添加到include文件的
+搜索路径中。然后在源码中添加TutorialConfig.h文件，内容如下：
+
+```c++
+// the configured options and settings for Tutorial
+#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
+#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
+```
+
+参考文件：
+
+* [原文](http://www.cmake.org/cmake/help/cmake_tutorial.html)
+
+
+
