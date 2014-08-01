@@ -468,6 +468,7 @@ do_test (0.0001 "0.0001 is 0.01")
 ```
 
 `TutorialConfig.h.in`文件如下：
+
 ```c++
 / the configured options and settings for Tutorial
 #define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
@@ -480,6 +481,7 @@ do_test (0.0001 "0.0001 is 0.01")
 ```
 
 MathFunctions的CMakeLists文件如下：
+
 ```cmake
 # first we add the executable that generates the table
 add_executable(MakeTable MakeTable.cxx)
