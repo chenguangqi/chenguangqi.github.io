@@ -465,7 +465,7 @@ do_test (-25 "-25 is 0")
 do_test (0.0001 "0.0001 is 0.01")
 ```
 
-TutorialConfig.h文件如下：
+`TutorialConfig.h.in`文件如下：
 ```c++
 / the configured options and settings for Tutorial
 #define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
@@ -477,7 +477,7 @@ TutorialConfig.h文件如下：
 #cmakedefine HAVE_EXP
 ```
 
-MathFunction的CMakeLists文件如下：
+MathFunctions的CMakeLists文件如下：
 ```cmake
 # first we add the executable that generates the table
 add_executable(MakeTable MakeTable.cxx)
@@ -498,10 +498,9 @@ install (TARGETS MathFunctions DESTINATION bin)
 install (FILES MathFunctions.h DESTINATION include)
 ```
 
+## 构建一个安装程序(步骤6)
+
 
 参考文件：
 
 * [原文](http://www.cmake.org/cmake/help/cmake_tutorial.html)
-
-
-
