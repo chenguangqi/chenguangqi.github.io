@@ -205,6 +205,76 @@ int main (int argc, char *argv[])
 #cmakedefine USE_MYMATH
 ```
 
+## 安装与测试(步骤三)
+
+下一步我们将为项目添加安装规则和测试支持。安装规则是相当直接的。为安装MathFunctions的库和头文件，
+在MathFunctions的CMakeLists文件中添加下面两行：
+
+```cmake
+install (TARGETS MathFunctions DESTINATION bin)
+install (FILES MathFunctions.h DESTINATION include)
+```
+
+为应用程序安装可执行文件和配置头文件，在顶层CMakeLists文件中添加下面行：
+
+```cmake
+# add the install targets
+install (TARGETS Tutorial DESTINATION bin)
+install (FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"        
+         DESTINATION include)
+```
+
+就这些，这时你可以编译这个教程，然后键入`make install`(或者从IDE中编译INSTALL目标),它将安装相应的头文件，库文件和可执行文件。CMake的CMAKE_INSTALL_PREFIX变量决定安装的根目录。添加测试的过程也是相当直接的。在顶层CMakeLists文件的最后，
+我们添加几个基本测试来验证这个应用程序可以正常工作。
+
+```cmake
+# does the application run
+add_test (TutorialRuns Tutorial 25)
+ 
+# does it sqrt of 25
+add_test (TutorialComp25 Tutorial 25)
+ 
+set_tests_properties (TutorialComp25 
+  PROPERTIES PASS_REGULAR_EXPRESSION "25 is 5")
+ 
+# does it handle negative numbers
+add_test (TutorialNegative Tutorial -25)
+set_tests_properties (TutorialNegative
+  PROPERTIES PASS_REGULAR_EXPRESSION "-25 is 0")
+ 
+# does it handle small numbers
+add_test (TutorialSmall Tutorial 0.0001)
+set_tests_properties (TutorialSmall
+  PROPERTIES PASS_REGULAR_EXPRESSION "0.0001 is 0.01")
+ 
+# does the usage message work?
+add_test (TutorialUsage Tutorial)
+set_tests_properties (TutorialUsage
+  PROPERTIES 
+  PASS_REGULAR_EXPRESSION "Usage:.*number")
+```
+
+首先简单的验证应用程序可以运行，没有段错误或崩溃，返回值是0。
+这是CTest测试项的基本格式。接着使用PASS_REGULAR_EXPRESSION测试属性
+验证测试项的输出包含某些字符串。我们现在的情况验证计算的平方根，以及当提供的参数的数量不正确
+时，输出使用方法信息。如果想添加大量的测试项来测试不同的输入值，你可能需要考虑创建一个宏，如下：
+
+```cmake
+#define a macro to simplify adding tests, then use it
+macro (do_test arg result)
+  add_test (TutorialComp${arg} Tutorial ${arg})
+  set_tests_properties (TutorialComp${arg}
+    PROPERTIES PASS_REGULAR_EXPRESSION ${result})
+endmacro (do_test)
+ 
+# do a bunch of result based tests
+do_test (25 "25 is 5")
+do_test (-25 "-25 is 0")
+```
+
+每次调用do_test，就为项目添加一个测试项，带有测试名称，输入和结果等参数。
+
+
 参考文件：
 
 * [原文](http://www.cmake.org/cmake/help/cmake_tutorial.html)
