@@ -160,6 +160,51 @@ add_executable (Tutorial tutorial.cxx)
 target_link_libraries (Tutorial  ${EXTRA_LIBS})
 ```
 
+USE_MYMATH的设定值决定是否编译和使用MathFunctions库，注意使用变量\(如这里的EXTRA_LIBS\)收集所有的可选库，最后链接到
+可执行文件中。这是一种方法可以保持大项目和可选组件之间的清洁。对源码的修改相当的直接和独立：
+
+```c++
+// A simple program that computes the square root of a number
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "TutorialConfig.h"
+#ifdef USE_MYMATH
+#include "MathFunctions.h"
+#endif
+ 
+int main (int argc, char *argv[])
+{
+  if (argc < 2)
+    {
+    fprintf(stdout,"%s Version %d.%d\n", argv[0],
+            Tutorial_VERSION_MAJOR,
+            Tutorial_VERSION_MINOR);
+    fprintf(stdout,"Usage: %s number\n",argv[0]);
+    return 1;
+    }
+ 
+  double inputValue = atof(argv[1]);
+ 
+#ifdef USE_MYMATH
+  double outputValue = mysqrt(inputValue);
+#else
+  double outputValue = sqrt(inputValue);
+#endif
+ 
+  fprintf(stdout,"The square root of %g is %g\n",
+          inputValue, outputValue);
+  return 0;
+}
+```
+
+在源码中我们也使用了USE_MYATH, 这个变量可以通过在配置文件TutorialConfig.h.in中添加下面的内容，
+使CMake传递它到源码中。
+
+```c++
+#cmakedefine USE_MYMATH
+```
+
 参考文件：
 
 * [原文](http://www.cmake.org/cmake/help/cmake_tutorial.html)
