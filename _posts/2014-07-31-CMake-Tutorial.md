@@ -275,7 +275,7 @@ do_test (-25 "-25 is 0")
 
 每次调用do_test，就为项目添加一个测试项，带有测试名称，输入和结果等参数。
 
-## 添加系统自检
+## 添加系统自检(步骤4)
 
 接下来让我们考虑将一些依赖于目标平台可能没有的特性的代码添加到项目,
 在这个例子中,我们将添加一些依赖于是否在目标平台有log和exp函数的代码。
@@ -311,7 +311,192 @@ check_function_exists (exp HAVE_EXP)
   . . .
 ```
 
+**注意**：CheckFunctionExists.cmake文件可能需要指定全路径。
+
 ## 添加生成的文件和生成器(步骤5)
+
+这一节我们将演示如何向应用程序的编译过程中添加生成的文件。在这个例子中，我们
+将添加预计算平方根的表作为编译过程的一部分，然后将个表编译进我们的程序中。
+为了完成这个，我们首先需要一个生成这个表的程序。仅需要在MathFunctions子目录中
+新建一个`MakeTable.ccx`文件。
+
+```c++
+// A simple program that builds a sqrt table 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+ 
+int main (int argc, char *argv[])
+{
+  int i;
+  double result;
+ 
+  // make sure we have enough arguments
+  if (argc < 2)
+    {
+    return 1;
+    }
+  
+  // open the output file
+  FILE *fout = fopen(argv[1],"w");
+  if (!fout)
+    {
+    return 1;
+    }
+  
+  // create a source file with a table of square roots
+  fprintf(fout,"double sqrtTable[] = {\n");
+  for (i = 0; i < 10; ++i)
+    {
+    result = sqrt(static_cast<double>(i));
+    fprintf(fout,"%g,\n",result);
+    }
+ 
+  // close the table with a zero
+  fprintf(fout,"0};\n");
+  fclose(fout);
+  return 0;
+}
+```
+注意生成的这表是以有效的C++代码，它被保存到在参数中指定的文件中。接着在MathFunctions的CMakeLists文件中
+添加相应的命令来编译MakeTable可执行文件，然后运行它作为编译过程的一个部分。完成这些需要一些命令，如下：
+
+```cmake
+# first we add the executable that generates the table
+add_executable(MakeTable MakeTable.cxx)
+ 
+# add the command to generate the source code
+add_custom_command (
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Table.h
+  COMMAND MakeTable ${CMAKE_CURRENT_BINARY_DIR}/Table.h
+  DEPENDS MakeTable
+  )
+ 
+# add the binary tree directory to the search path for 
+# include files
+include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
+ 
+# add the main library
+add_library(MathFunctions mysqrt.cxx ${CMAKE_CURRENT_BINARY_DIR}/Table.h)
+```
+
+首先像其他添加的生成可执行文件命令一样添加生成MakeTable可执行文件的命令。
+然后通过执行`MakeTable`，我们添加一个怎样生成`Table.h`文件的定制命令。
+接着我们让CMake知道`mysqrt.cxx`依赖生成的文件`Table.h`。要完成这个需要为
+MathFunctions库的源码列表添加生成的`Table.h`文件。我们也必须添加当前的bin
+目录到include目录列表中，这样mysqrt.cxx文件中的include命令就可以找到Table.h文件。
+
+当编译这个项目的时候，它首先编译MakeTable可执行文件，然后运行MakeTable生成Table.h文件。
+最后它编译包含Table.h文件的mysqrt.cxx文件生成MathFunctions库。
+
+这时候顶层的CMakeLists文件的带有我们已经添加的所有功能，如下：
+
+```cmake
+cmake_minimum_required (VERSION 2.6)
+project (Tutorial)
+ 
+# The version number.
+set (Tutorial_VERSION_MAJOR 1)
+set (Tutorial_VERSION_MINOR 0)
+ 
+# does this system provide the log and exp functions?
+include (${CMAKE_ROOT}/Modules/CheckFunctionExists.cmake)
+ 
+check_function_exists (log HAVE_LOG)
+check_function_exists (exp HAVE_EXP)
+ 
+# should we use our own math functions
+option(USE_MYMATH 
+  "Use tutorial provided math implementation" ON)
+ 
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${PROJECT_SOURCE_DIR}/TutorialConfig.h.in"
+  "${PROJECT_BINARY_DIR}/TutorialConfig.h"
+  )
+ 
+# add the binary tree to the search path for include files
+# so that we will find TutorialConfig.h
+include_directories ("${PROJECT_BINARY_DIR}")
+ 
+# add the MathFunctions library?
+if (USE_MYMATH)
+  include_directories ("${PROJECT_SOURCE_DIR}/MathFunctions")
+  add_subdirectory (MathFunctions)
+  set (EXTRA_LIBS ${EXTRA_LIBS} MathFunctions)
+endif (USE_MYMATH)
+ 
+# add the executable
+add_executable (Tutorial tutorial.cxx)
+target_link_libraries (Tutorial  ${EXTRA_LIBS})
+ 
+# add the install targets
+install (TARGETS Tutorial DESTINATION bin)
+install (FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"        
+         DESTINATION include)
+ 
+# does the application run
+add_test (TutorialRuns Tutorial 25)
+ 
+# does the usage message work?
+add_test (TutorialUsage Tutorial)
+set_tests_properties (TutorialUsage
+  PROPERTIES 
+  PASS_REGULAR_EXPRESSION "Usage:.*number"
+  )
+ 
+ 
+#define a macro to simplify adding tests
+macro (do_test arg result)
+  add_test (TutorialComp${arg} Tutorial ${arg})
+  set_tests_properties (TutorialComp${arg}
+    PROPERTIES PASS_REGULAR_EXPRESSION ${result}
+    )
+endmacro (do_test)
+ 
+# do a bunch of result based tests
+do_test (4 "4 is 2")
+do_test (9 "9 is 3")
+do_test (5 "5 is 2.236")
+do_test (7 "7 is 2.645")
+do_test (25 "25 is 5")
+do_test (-25 "-25 is 0")
+do_test (0.0001 "0.0001 is 0.01")
+```
+
+TutorialConfig.h文件如下：
+```c++
+/ the configured options and settings for Tutorial
+#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
+#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
+#cmakedefine USE_MYMATH
+ 
+// does the platform provide exp and log functions?
+#cmakedefine HAVE_LOG
+#cmakedefine HAVE_EXP
+```
+
+MathFunction的CMakeLists文件如下：
+```cmake
+# first we add the executable that generates the table
+add_executable(MakeTable MakeTable.cxx)
+# add the command to generate the source code
+add_custom_command (
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Table.h
+  DEPENDS MakeTable
+  COMMAND MakeTable ${CMAKE_CURRENT_BINARY_DIR}/Table.h
+  )
+# add the binary tree directory to the search path 
+# for include files
+include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
+ 
+# add the main library
+add_library(MathFunctions mysqrt.cxx ${CMAKE_CURRENT_BINARY_DIR}/Table.h)
+ 
+install (TARGETS MathFunctions DESTINATION bin)
+install (FILES MathFunctions.h DESTINATION include)
+```
 
 
 参考文件：
