@@ -293,7 +293,7 @@ check_function_exists (exp HAVE_EXP)
 
 接着我们修改TutorialConfig.h.in文件，如果在这个平台上有这些函数，就定义这些宏:
 
-```cmake
+```c++
 // does the platform provide exp and log functions?
 #cmakedefine HAVE_LOG
 #cmakedefine HAVE_EXP
