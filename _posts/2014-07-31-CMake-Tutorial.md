@@ -271,9 +271,47 @@ endmacro (do_test)
 do_test (25 "25 is 5")
 do_test (-25 "-25 is 0")
 ```
-***注意**：在测试的前面添加`enable_testing ()`命令
+**注意**：在测试的前面添加`enable_testing ()`命令
 
 每次调用do_test，就为项目添加一个测试项，带有测试名称，输入和结果等参数。
+
+## 添加系统自检
+
+接下来让我们考虑将一些依赖于目标平台可能没有的特性的代码添加到项目,
+在这个例子中,我们将添加一些依赖于是否在目标平台有log和exp函数的代码。
+当然,几乎每个平台都有这些功能,但是对于本教程假设他们不是常见的。
+如该平台有`log`，然后我们在`mysqrt`函数中使用它来计算平方根。
+首先在顶层的CMakelists文件中使用CheckFunctionExists.cmake宏来测试这些
+函数是否有效:
+
+```cmake
+# does this system provide the log and exp functions?
+include (CheckFunctionExists.cmake)
+check_function_exists (log HAVE_LOG)
+check_function_exists (exp HAVE_EXP)
+```
+
+接着我们修改TutorialConfig.h.in文件，如果在这个平台上有这些函数，就定义这些宏:
+
+```cmake
+// does the platform provide exp and log functions?
+#cmakedefine HAVE_LOG
+#cmakedefine HAVE_EXP
+```
+
+重要的是对`log`和`exp`的测试要在`configure_file`命令之前完成。在CMake中,`configure_file`命令
+使用当前的设置立即生成配置文件。最在我们的mysqrt函数中，我们可以提供一个基于`log`和`exp`的实现，
+如果他们在系统中是有效的，使用的代码如下：
+
+```c++
+// if we have both log and exp then use them
+#if defined (HAVE_LOG) && defined (HAVE_EXP)
+  result = exp(log(x)*0.5);
+#else // otherwise use an iterative approach
+  . . .
+```
+
+## 添加生成的文件和生成器(步骤5)
 
 
 参考文件：
