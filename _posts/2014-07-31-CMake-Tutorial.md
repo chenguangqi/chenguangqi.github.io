@@ -435,6 +435,8 @@ target_link_libraries (Tutorial  ${EXTRA_LIBS})
 install (TARGETS Tutorial DESTINATION bin)
 install (FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"        
          DESTINATION include)
+
+enable_testing () 
  
 # does the application run
 add_test (TutorialRuns Tutorial 25)
@@ -499,6 +501,38 @@ install (FILES MathFunctions.h DESTINATION include)
 ```
 
 ## 构建一个安装程序(步骤6)
+
+下面假设我们想发布我们的项目给其他的人使用。我们想要为多种平台提供二进制和源码发布。
+这有点不同于我们在设置部分安装和测试(步骤3)之前所做，之前我们是从编译后的源码安装二进制文件。
+在这个例子中我们将构建以安装包，支持的二进制安装和包管理功能有cygwin，debian，RPMs等。
+为了实现这一点,我们将使用CPack创建特定于平台的安包装，更详细的在"用CPack打包"一章中。
+具体的我们需要在顶层的CMakeLists.txt文件的底部添加下面行：
+
+```cmake
+# build a CPack driven installer package
+include (InstallRequiredSystemLibraries)
+set (CPACK_RESOURCE_FILE_LICENSE  
+     "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+set (CPACK_PACKAGE_VERSION_MAJOR "${Tutorial_VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${Tutorial_VERSION_MINOR}")
+include (CPack)
+```
+
+就这些。在开始出我们包含InstallRequiredSystemLibraries。这个模块将为项目当前平台包含任何需要的
+运行时库。然后我们设置Cpack变量，指定license文件的位置和该项目的版本信息。版本的信息使用我们在
+本教程前面定义的变量。最后我们包含CPack模块，使用这些变量和系统的其他属性设置安装包。
+
+接着手动构建这个项目，然后运行CPack。为构建二进制发布版，执行下面的命令：
+
+```bash
+cpack -C CPackConfig.cmake
+```
+
+构建源码安装包，执行下面的命令：
+
+```bash
+cpack -C CPackSourceConfig.cmake
+```
 
 
 参考文件：
