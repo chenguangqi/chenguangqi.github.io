@@ -160,7 +160,7 @@ add_executable (Tutorial tutorial.cxx)
 target_link_libraries (Tutorial  ${EXTRA_LIBS})
 ```
 
-USE_MYMATH的设定值决定是否编译和使用MathFunctions库，注意使用变量\(如这里的EXTRA_LIBS\)收集所有的可选库，最后链接到
+USE\_MYMATH的设定值决定是否编译和使用MathFunctions库，注意使用变量\(如这里的EXTRA\_LIBS\)收集所有的可选库，最后链接到
 可执行文件中。这是一种方法可以保持大项目和可选组件之间的清洁。对源码的修改相当的直接和独立：
 
 ```c++
@@ -198,7 +198,7 @@ int main (int argc, char *argv[])
 }
 ```
 
-在源码中我们也使用了USE_MYATH, 这个变量可以通过在配置文件TutorialConfig.h.in中添加下面的内容，
+在源码中我们也使用了USE\_MYATH, 这个变量可以通过在配置文件TutorialConfig.h.in中添加下面的内容，
 使CMake传递它到源码中。
 
 ```c++
@@ -224,7 +224,7 @@ install (FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"
          DESTINATION include)
 ```
 
-就这些，这时你可以编译这个教程，然后键入`make install`(或者从IDE中编译INSTALL目标),它将安装相应的头文件，库文件和可执行文件。CMake的CMAKE_INSTALL_PREFIX变量决定安装的根目录。添加测试的过程也是相当直接的。在顶层CMakeLists文件的最后，
+就这些，这时你可以编译这个教程，然后键入`make install`(或者从IDE中编译INSTALL目标),它将安装相应的头文件，库文件和可执行文件。CMake的CMAKE\_INSTALL\_PREFIX变量决定安装的根目录。添加测试的过程也是相当直接的。在顶层CMakeLists文件的最后，
 我们添加几个基本测试来验证这个应用程序可以正常工作。
 
 ```cmake
@@ -255,7 +255,7 @@ set_tests_properties (TutorialUsage
 ```
 
 首先简单的验证应用程序可以运行，没有段错误或崩溃，返回值是0。
-这是CTest测试项的基本格式。接着使用PASS_REGULAR_EXPRESSION测试属性
+这是CTest测试项的基本格式。接着使用PASS\_REGULAR\_EXPRESSION测试属性
 验证测试项的输出包含某些字符串。我们现在的情况验证计算的平方根，以及当提供的参数的数量不正确
 时，输出使用方法信息。如果想添加大量的测试项来测试不同的输入值，你可能需要考虑创建一个宏，如下：
 
