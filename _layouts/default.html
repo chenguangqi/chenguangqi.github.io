@@ -10,7 +10,11 @@
     <div class="content container">
       {{ content }}
     </div>
-
+    <div class="comments">
+      {% if page.comments %}
+        {% include comments.ext %}
+      {% endif %}
+    </div>
   </body>
   <script type="text/javascript">
 
