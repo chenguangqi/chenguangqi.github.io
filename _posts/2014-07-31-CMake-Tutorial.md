@@ -205,7 +205,7 @@ int main (int argc, char *argv[])
 #cmakedefine USE_MYMATH
 ```
 
-## 安装与测试(步骤三)
+## 安装与测试(步骤3)
 
 下一步我们将为项目添加安装规则和测试支持。安装规则是相当直接的。为安装MathFunctions的库和头文件，
 在MathFunctions的CMakeLists文件中添加下面两行：
@@ -271,6 +271,7 @@ endmacro (do_test)
 do_test (25 "25 is 5")
 do_test (-25 "-25 is 0")
 ```
+***注意**：在测试的前面添加`enable_testing ()`命令
 
 每次调用do_test，就为项目添加一个测试项，带有测试名称，输入和结果等参数。
 
