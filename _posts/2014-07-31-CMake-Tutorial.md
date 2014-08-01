@@ -1,6 +1,7 @@
 ---
 layout: post
 title: CMake 教程
+comments: true
 ---
 
 
