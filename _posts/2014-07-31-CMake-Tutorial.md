@@ -534,6 +534,26 @@ cpack -C CPackConfig.cmake
 cpack -C CPackSourceConfig.cmake
 ```
 
+## 添加仪表板支持(步骤7)
+
+添加将我们的测试结果提到仪表盘的支持是非常简单的。在本教程的前面我们已经为该项目定义了很多的测试项。
+我们只需要运行测试，然后将结果提交到仪表盘。为了包含仪表盘支持，我们包含Ctest模块到我们的顶层CMakeLists文件
+中。
+
+```cmake
+# enable dashboard scripting
+include (CTest)
+```
+
+为仪表盘指定这个项目的名称，我们创建CTestConfig.cmake，内容如下：
+
+```cmake
+set (CTEST_PROJECT_NAME "Tutorial")
+```
+
+Ctest将会在运行的时候读取这个文件。为了创建一个简单的仪表盘你可以在你的项目中运行CMake，将目录切换到
+bin目录，然后运行`ctest -D Experimental`。你的仪表盘的结果将会上传到[Kitware的公共仪表盘](http://www.cdash.org/CDash/index.php?project=PublicDashboard)。
+
 
 参考文件：
 
