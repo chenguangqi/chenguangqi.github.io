@@ -10,6 +10,7 @@ author:
   name: 'Chen Guangqi'
 
 paginate: 5
+excerpt_separator: "\n\n"
 
 markdown: redcarpet
 highlighter: pygments
