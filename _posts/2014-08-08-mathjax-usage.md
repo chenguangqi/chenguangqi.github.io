@@ -17,6 +17,16 @@ z & v
 \end{matrix}
 $$
 
+### 关于`\`:
+在有些系统上，可以需要使用两个`\`来表示一个`\`，例如：
+\[
+\\begin{array}{cc}
+a & b \\\\
+c & d
+\]
+
+
+**注意**:带有数学公式的网页加载可能会变慢。
 
 #### 参考
-* [Tex公式](http://meta.wikimedia.org/wiki/Help:Formula)
+* [MathJax支持的Tex/Latex格式](http://mathjax-chinese-doc.readthedocs.org/en/latest/tex.html#tex-support)
