@@ -12,8 +12,8 @@ $$ a= b + c $$
 矩阵的表示:
 
 $$\begin{matrix}
-x & y \\
-z & v
+x \& y \\
+z \& v
 \end{matrix}
 $$
 
@@ -23,8 +23,8 @@ $$
 ```tex
 \\[
 \\begin{array}{cc}
-a & b \\\\
-c & d
+a \& b \\\\
+c \& d
 \\]
 ```
 
@@ -32,8 +32,8 @@ c & d
 
 \\[
 \\begin{array}{cc}
-a & b \\\\
-c & d
+a \& b \\\\
+c \& d
 \\]
 
 
