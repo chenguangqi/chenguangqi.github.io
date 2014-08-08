@@ -11,10 +11,10 @@ $$ a= b + c $$
 
 矩阵的表示:
 
-$$\begin{matrix}
-x & y \\
+$$\\begin{matrix}
+x & y \\\\
 z & v
-\end{matrix}
+\\end{matrix}
 $$
 
 ### 关于`\`:
