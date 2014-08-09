@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: articles_item
 title: MathJax的使用
-mathjax: true
+author: chenguangqi
+categories: [Tools]
 ---
 
 使用MathJax, 编写漂亮的数学公式。
@@ -10,32 +11,34 @@ mathjax: true
 
 在github的用户GitHub Pages仓库中加入MathJax
 
-```bash
+{% highlight bash %}
 git submodule add https://github.com/mathjax/MathJax.git mathjax
 git submodule init
 git commit -a -m 'support MathJax'
-```
+{% endhighlight %}
 
 ### 在有公式的博文中链接MathJax
 
 
 在\_include目录中新建文件mathjax.html，内容如下：
 
-```html
+{% highlight html %}
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
   });
 </script>
 <script type="text/javascript" src="/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-```
+{% endhighlight %}
 
-在\_include目录中head.html文件的`</head>`前添加如下内容(请删除`%`前的`\`):
+在\_include目录中head.html文件的`</head>`前添加如下内容:
 
-```
+{% highlight text %}
+{% raw %}
 <!-- MathJax -->
-{\% include mathjax.html %}
-```
+{% include mathjax.html %}
+{% endraw %}
+{% endhighlight %}
 
 这样就可以使用编写数学公式了。MathJax的是使用方法，参见最后的参考文档。
 
@@ -59,14 +62,14 @@ z & v
 
 在有些系统上，可能需要使用两个`\`来表示一个`\`，例如：
 
-```
+{% highlight latex %}
 \\[
 \\left \\begin{array}{cc}
 a & b \\\\
 c & d
 \\end{array} \\right
 \\]
-```
+{% endhighlight %}
 
 显示效果：
 
@@ -76,6 +79,7 @@ a & b \\\\
 c & d
 \\end{array}
 \\]
+
 
 
 **注意**:带有数学公式的网页加载可能会变慢。

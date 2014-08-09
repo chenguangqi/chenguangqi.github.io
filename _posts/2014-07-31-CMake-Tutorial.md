@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: articles_item
 title: CMake 教程
-comments: true
+author: chenguangqi
+categories: [Make]
 ---
 
 

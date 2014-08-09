@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: articles_item
 title:  "首发，第一弹！"
-date:   2013-12-21 23:33:15
+author: chenguangqi
+categories: [开始点]
 ---
 
 这是我的第一篇测试用博文。我的[GitHub][me-gh]。

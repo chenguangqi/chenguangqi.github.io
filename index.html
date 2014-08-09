@@ -1,38 +1,13 @@
 ---
 layout: default
-title: Home
+title: 陈广歧个人博客 with Jekyll
+overview: true
 ---
 
-<div class="posts">
-  {% for post in paginator.posts %}
-  <div class="post">
-    <h1 class="post-title">
-      <a href="{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </h1>
-
-    <span class="post-date">{{ post.date | date_to_string }}</span>
-
-    {{ post.excerpt }}
-
+<section class="intro">
+  <div class="grid">
+    <div class="unit whole center-on-mobiles">
+      <!--<p class="first">陈广歧个人博客</p>-->
+    </div>
   </div>
-  {% endfor %}
-</div>
-
-<div class="pagination">
-  {% if paginator.next_page %}
-    <a class="pagination-item older" href="/page{{paginator.next_page}}">以前</a>
-  {% else %}
-    <span class="pagination-item older">以前</span>
-  {% endif %}
-  {% if paginator.previous_page %}
-    {% if paginator.page == 2 %}
-      <a class="pagination-item newer" href="/">最新</a>
-    {% else %}
-      <a class="pagination-item newer" href="/page{{paginator.previous_page}}">最新</a>
-    {% endif %}
-  {% else %}
-    <span class="pagination-item newer">最新</span>
-  {% endif %}
-</div>
+</section>

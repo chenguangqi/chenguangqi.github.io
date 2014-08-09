@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: articles_item
 title:  "学习-emacs"
-date:   2014-1-18 22:14:05
+author: chenguangqi
+categories: [Emacs]
 ---
 
 已经使用vim很久了，现在决定转向emacs.

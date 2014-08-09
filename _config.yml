@@ -1,7 +1,8 @@
 name: ChenGuangqi (陈广歧)
 encoding: utf-8
 
-permalink: pretty
+# permalink: pretty
+permalink: /articles/:year/:month/:day/:title/
 
 # Setup
 title: Chen Guangqi

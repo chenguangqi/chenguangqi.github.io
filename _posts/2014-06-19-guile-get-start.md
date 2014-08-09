@@ -1,6 +1,8 @@
 ---
-layout: post
-title: Guile 入门
+layout: articles_item
+title: "Guile 入门"
+author: chenguangqi
+categories: [Lisp]
 ---
 
 ***

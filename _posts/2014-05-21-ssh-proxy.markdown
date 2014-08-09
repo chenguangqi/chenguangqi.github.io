@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: articles_item
 title:  "ssh 翻墙"
-date:   2014-5-21 9:56:05
+author: chenguangqi
+categories: [SSH]
 ---
 
 ```bash

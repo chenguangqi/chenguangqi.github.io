@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: articles_item
 title: 在vim中查看man帮助
-categories: vim
+author: chenguangqi
+categories: [Vim]
 ---
 
 ## 在vim中查看man帮助

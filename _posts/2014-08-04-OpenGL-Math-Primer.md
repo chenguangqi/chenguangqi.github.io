@@ -1,6 +1,8 @@
 ---
-layout: post
+layout: articles_item
 title: OpenGL数学基础
+author: chenguangqi
+categories: [Math, OpenGL]
 ---
 
 OpenGL和3D图形一般都是基于向量和矩阵数学。...此处省略50字...
