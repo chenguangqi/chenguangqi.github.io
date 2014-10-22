@@ -5,9 +5,9 @@ author: chenguangqi
 categories: [Tools]
 ---
 
-## 安装squid
+使用squid配置HTTP二级代理。
 
-使用squid配置HTTP二级代理
+## 安装squid
 
 ```bash
 sudo apt-get install squid
