@@ -8,7 +8,7 @@ categories: [Tools]
 ## 安装squid
 
 ```bash
-$ sudo apt-get install squid
+sudo apt-get install squid
 ```
 
 ## 配置squid
