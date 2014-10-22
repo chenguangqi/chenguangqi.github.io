@@ -1,11 +1,13 @@
 ---
 layout: articles_item
-title: 使用squid作http的二级代理
+title: 配置HTTP二级代理
 author: chenguangqi
 categories: [Tools]
 ---
 
 ## 安装squid
+
+使用squid配置HTTP二级代理
 
 ```bash
 sudo apt-get install squid
