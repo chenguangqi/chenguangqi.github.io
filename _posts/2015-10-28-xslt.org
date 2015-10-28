@@ -1,0 +1,143 @@
+#+OPTIONS: html-link-use-abs-url:nil html-postamble:auto
+#+OPTIONS: html-preamble:t html-scripts:t html-style:t
+#+OPTIONS: html5-fancy:nil tex:t
+#+CREATOR: <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)
+#+HTML_CONTAINER: div
+#+HTML_DOCTYPE: xhtml-strict
+#+HTML_HEAD:
+#+HTML_HEAD_EXTRA:
+#+HTML_LINK_HOME:
+#+HTML_LINK_UP:
+#+HTML_MATHJAX:
+#+INFOJS_OPT:
+#+LATEX_HEADER:
+#+TITLE: XSLT规范
+#+AUTHOR: 陈广歧
+#+DATE: 2015-10-28
+
+* XSL转换(XSLT)
+  本规范定义了XSLT的语法和语义，这是一种将XML文档转换成其它XML文档的语言。
+  
+
+** 简介
+   
+** 样式表结构
+
+** 数据模型
+
+** 表达式
+
+** 模板规则
+
+*** 处理模型
+
+*** 覆写模板规则
+    #+BEGIN_EXAMPLE
+    <!-- 分类: 指令(instruction) -->
+    <xsl:apply-imports/>
+    #+END_EXAMPLE
+
+    一个模板规则会覆写在样式表中导入的模板规则，使用 =xsl:apply-imports= 元素可以调用被覆写的模板规则。
+
+    在样式表处理的任何点，有一个当前模板规则。每当匹配到一个模板规则，这个模板规则就变成当前模板规则用于
+    规则模板的实例化。当 =xsl:for-each= 元素被实例化时，当前模板规则变成null，为 =xsl:for-each= 元素
+    的上下文的实例化。
+
+    =xsl:apply-imports= 处理当前节点仅使用导入进包含当前模板规则的样式元素的模板规则。
+    该节点在当前模板规则的mode中处理。当前模板规则是null，如果实例化 =xsl:apply-imports= , 就会出错。 
+    
+    例如，假设样式表 =doc.xsl= 包含一个 =example= 元素的模板规则:
+    #+BEGIN_EXAMPLE
+    <xsl:template match="example">
+      <pre><xsl:apply-templates/></pre>
+    </xsl:template>
+    #+END_EXAMPLE
+
+    另一样式表导入 =doc.xsl=, 如下修改 =example= 元素的处理:
+    #+BEGIN_EXAMPLE
+    <xsl:import href="doc.xsl"/>
+    
+    <xsl:template match="example">
+      <div style="border: solid red">
+        <xsl:apply-imports/>
+      </div>
+    <xsl:template>
+    #+END_EXAMPLE
+
+    组合效果将 =example= 转换进的元素格式:
+    #+BEGIN_EXAMPLE
+    <div style="border: solid red"><pre>...</pre></div>
+    #+END_EXAMPLE
+    
+*** 模式(mode)
+    模式允许元素被处理多次，每次的处理结果不同。
+
+    =xsl:template= 和 =xsl:apply-templates= 有一个可选的属性 =mode= 。 =mode= 属性的值是一个[[QName]], 
+    如果 =xsl:template= 没有 =mactch= 属性，它必须没有 =mode= 属性。如果 =xsl:apply-templates= 元素
+    有 =mode= 属性，那么它仅应用那些有相同 =mode= 的 =xsl:template= 元素的模板规则; 
+    如果 =xsl:apply-templates= 元素没有 =mode= 属性，那么它仅应用那些没有 =mode= 属性的 =xsl:template= 元素
+    的模板规则。
+
+*** 内置模板规则
+    有一个内置的模板规则，允许继续递归的处理在样式表中通过显式模板规则没有成功模式匹配的部分。
+    这个模板应用到 *元素节点* 和 *跟节点* 。下面显示了内置模板规则相当于：
+
+    #+BEGIN_EXAMPLE
+    <xsl:template match="*|/">
+      <xsl:apply-templates mode="m"/>
+    <xsl:template>
+    #+END_EXAMPLE
+
+    每一个mode也有一个内置模板规则，允许继续在同个mode中递归的处理在样式表中通过显示规则没有成功匹配的部分。
+    这个模板应用到 *元素节点* 和 *跟节点* 。下面显示了mode(m)内置模板规则相当于:
+
+    #+BEGIN_EXAMPLE
+    <xsl:template match="*|/" mode="m">
+      <xsl:apply-templates mode="m">
+    <xsl:template>
+    #+END_EXAMPLE
+
+    用来拷贝文本和属性节点的文本的内置模板规则:
+    #+BEGIN_EXAMPLE
+    <xsl:template match="text()|@*">
+      <xsl:value-of select="."/>
+    <xsl:template/>
+    #+END_EXAMPLE
+
+    处理指令和注释的内置模板规则什么都不做。
+    #+BEGIN_EXAMPLE
+    <xsl:template match="processing-instruction()|comment()"/>
+    #+END_EXAMPLE
+
+    命名空间节点的内置模板规则也是什么都不做。没有模式能匹配命名空寂节点，所有内置模板规则是唯一能应用的命名空间节点的规则。
+
+    内置模板规则被视为在样式表之前隐式导入，因此比其他所有的模板规则的导入优先级低。
+
+** 命名模板
+
+** 创建结果树
+
+** 重复
+
+** 条件处理
+
+** 排序
+
+** 变量和参数
+
+** 附加功能
+
+** 消息
+
+** 扩展
+
+** 反馈
+
+** 输出
+
+** 一致性
+
+** 表示法
+
+ *持续更新中 ......*
+
