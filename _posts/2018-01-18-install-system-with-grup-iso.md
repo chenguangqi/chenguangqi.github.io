@@ -1,8 +1,11 @@
 ---
 layout: articles_item
-title: 使用grub（非grub2）+ISO镜像文件安装RHEL7.3
+title: ISO镜像文件安装RHEL7.3
 categories: [linux bootloader grub]
 ---
+
+本篇说明了使用grub（非grub2），从RHEL7.3的ISO镜像安装操作系统，
+不需要将ISO刻录成光盘。
 
 ## 硬件需求：
   * 硬盘1： 已安装RHEL6.8, 有两个分区, 第一个分区的挂载点是/boot,
