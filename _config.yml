@@ -14,6 +14,6 @@ paginate: 5
 excerpt_separator: "\n\n"
 
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 redcarpet:
   extensions: ['fenced_code_blocks']
