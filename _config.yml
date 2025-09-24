@@ -1,14 +1,14 @@
-name: ChenGuangqi (陈广歧)
+name: 独狼刺
 encoding: utf-8
 
 # permalink: pretty
 permalink: /articles/:year/:month/:day/:title/
 
 # Setup
-title: Chen Guangqi
+title: 独狼刺
 
 author:
-  name: 'Chen Guangqi'
+  name: '独狼刺'
 
 paginate: 5
 excerpt_separator: "\n\n"
